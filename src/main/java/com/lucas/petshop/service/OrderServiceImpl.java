@@ -54,14 +54,25 @@ public class OrderServiceImpl implements OrderService {
     public void updateOrder(Long id, Order order) {
         var startTime = System.currentTimeMillis();
 
-        orderRepository.save(order);
+        Order existingOrder = orderRepository.findById(id)
+                        .orElseThrow(() -> new RuntimeException("ORDER NOT FOUND"));
+
+        existingOrder.setQuantity(order.getQuantity());
+        existingOrder.setClient(order.getClient());
+        existingOrder.setDate(order.getDateTime());
+        existingOrder.setStatus(order.getStatus());
+
+        orderRepository.save(existingOrder);
     }
 
     @Override
     public void deleteOrder(Long id) {
         var startTime = System.currentTimeMillis();
 
-        orderRepository.deleteById(id);
+        Order existingOrder = orderRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("ORDER NOT FOUND"));
+
+        orderRepository.delete(existingOrder);
 
         Timer.measure("[DELETE ORDER] - Sucessfully", startTime);
     }

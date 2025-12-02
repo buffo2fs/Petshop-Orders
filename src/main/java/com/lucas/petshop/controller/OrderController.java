@@ -35,14 +35,14 @@ public class OrderController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PutMapping("/{orderId}")
+    @PutMapping("/{id}")
     public ResponseEntity updateOrder(@PathVariable Long id, @RequestBody Order order){
         orderService.updateOrder(id, order);
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/{orderId}")
-    public ResponseEntity<Order> deleteOrder(@PathVariable Long id){
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void  > deleteOrder(@PathVariable Long id){
         orderService.deleteOrder(id);
         return ResponseEntity.noContent().build();
     }
