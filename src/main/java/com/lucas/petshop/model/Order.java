@@ -1,81 +1,44 @@
 package com.lucas.petshop.model;
 
 
+import com.lucas.petshop.enums.OrderStatus;
 import jakarta.persistence.*;
+import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
+@Data
 @Entity
 @Table(name = "tb_orders")
 public class Order {
 
     @Id
-    @Column(name = "order_id")
+    @Column (name = "order_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "quantity")
+    @Column(name = "quantity", nullable = false)
     private Integer quantity;
 
-    @Column(name = "client")
+    @Column(name = "client", nullable = false)
     private String client;
 
-    @Column(name = "dateTime")
-    private Timestamp dateTime;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private OrderStatus status;
 
-    @Column(name = "status")
-    private String status;
+    @CreationTimestamp
+    @Column(name = "order_creation", nullable = false)
+    private LocalDateTime orderCreation;
 
-    public Order() {
+    @Column(name = "order_update")
+    private LocalDateTime orderUpdate;
 
-    }
-
-    public Order(Integer quantity, String client, Timestamp dateTime, String status) {
-        this.quantity = quantity;
-        this.client = client;
-        this.dateTime = dateTime;
-        this.status = status;
-    }
-
-    public Long getId() {
-        return this.id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Integer getQuantity() {
-        return this.quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
-    public String getClient() {
-        return this.client;
-    }
-
-    public void setClient(String client) {
-        this.client = client;
-    }
-
-    public Timestamp getDateTime() {
-        return this.dateTime;
-    }
-
-    public void setDate(Timestamp date) {
-        this.dateTime = dateTime;
-    }
-
-    public String getStatus() {
-        return this.status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
+    @Column(name = "deleted_order", nullable = false)
+    private Boolean deletedOrder = false;
 
 }

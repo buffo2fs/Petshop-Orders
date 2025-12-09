@@ -1,6 +1,5 @@
 {
   "quantity": 10,
-  "client": "Andre Wada",
-  "dateTime": "2025-01-12T20:20:00.000Z",
-  "status": "Aprovado"
+  "client": "teste",
+  "status": "in_progress"
 }

@@ -1,18 +1,20 @@
 package com.lucas.petshop.service;
 
+import com.lucas.petshop.dto.OrderRequestDTO;
+import com.lucas.petshop.dto.OrderResponseDTO;
 import com.lucas.petshop.model.Order;
 
 import java.util.List;
 
 public interface OrderService {
 
-    List<Order> getAllOrders();
+    List<OrderResponseDTO> getAllOrders();
 
-    Order getOrderById(Long id);
+    OrderResponseDTO getOrderById(Long id);
 
-    long createOrder(Order order);
+    long createOrder(OrderRequestDTO order);
 
-    void updateOrder(Long id, Order order);
+    void updateOrder(Long id, OrderRequestDTO order);
 
     void deleteOrder(Long id);
 }

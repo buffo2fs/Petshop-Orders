@@ -1,14 +1,19 @@
 package com.lucas.petshop.controller;
 
 
+import com.lucas.petshop.dto.OrderRequestDTO;
+import com.lucas.petshop.dto.OrderResponseDTO;
 import com.lucas.petshop.model.Order;
 import com.lucas.petshop.service.OrderService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @RestController
 @RequestMapping("/orders")
@@ -18,31 +23,29 @@ public class OrderController {
     private OrderService orderService;
 
     @GetMapping()
-    public ResponseEntity<List<Order>> getAllOrders(){
-        List<Order> orderList = orderService.getAllOrders();
-        return new ResponseEntity<>(orderList, HttpStatus.OK);
+    public ResponseEntity<List<OrderResponseDTO>> getAllOrders(){
+        return ResponseEntity.ok(orderService.getAllOrders());
     }
 
     @GetMapping("/{orderId}")
-    public ResponseEntity<Order> getById(@PathVariable(value = "orderId") Long id){
-        Order order = orderService.getOrderById(id);
-        return new ResponseEntity<>(order, HttpStatus.OK);
+    public ResponseEntity<OrderResponseDTO> getById(@PathVariable(value = "orderId") Long id){
+        return ResponseEntity.ok(orderService.getOrderById(id));
     }
 
     @PostMapping
-    public ResponseEntity<Void> createOrder(@RequestBody Order newOrder){
-        orderService.createOrder(newOrder);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<Void> createOrder(@Valid @RequestBody OrderRequestDTO dto){
+        Long id = orderService.createOrder(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity updateOrder(@PathVariable Long id, @RequestBody Order order){
-        orderService.updateOrder(id, order);
+    public ResponseEntity updateOrder(@PathVariable(value = "id") Long id, @Valid @RequestBody OrderRequestDTO dto){
+        orderService.updateOrder(id, dto);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void  > deleteOrder(@PathVariable Long id){
+    public ResponseEntity<Void  > deleteOrder(@PathVariable(value = "id") Long id){
         orderService.deleteOrder(id);
         return ResponseEntity.noContent().build();
     }
