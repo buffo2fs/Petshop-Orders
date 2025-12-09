@@ -21,11 +21,14 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "quantity", nullable = false)
-    private Integer quantity;
+    @Column(name = "total_items_count", nullable = false)
+    private Integer totalItemsCount;
 
     @Column(name = "client", nullable = false)
     private String client;
+
+    @Column(name = "total_amount", nullable = false)
+    private Integer totalAmount;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)

@@ -79,8 +79,9 @@ public class OrderServiceImpl implements OrderService {
             throw new RuntimeException("CANNOT UPDATE A DELETED PRODUCT");
         }
 
-        existing.setQuantity(dto.quantity());
+        existing.setTotalItemsCount(dto.totalItemsCount());
         existing.setClient(dto.client());
+        existing.setTotalAmount(dto.totalAmount());
         existing.setStatus(dto.status());
         existing.setOrderUpdate(LocalDateTime.now());
 

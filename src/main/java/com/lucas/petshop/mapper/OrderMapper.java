@@ -8,8 +8,9 @@ public class OrderMapper {
 
     public static OrderResponseDTO toDTO(Order order) {
         return new OrderResponseDTO(
-                order.getQuantity(),
+                order.getTotalItemsCount(),
                 order.getClient(),
+                order.getTotalAmount(),
                 order.getStatus(),
                 order.getOrderCreation()
         );
@@ -18,7 +19,8 @@ public class OrderMapper {
 
     public static Order toEntity(OrderRequestDTO dto){
         Order order = new Order();
-        order.setQuantity(dto.quantity());
+        order.setTotalItemsCount(dto.totalItemsCount());
+        order.setTotalAmount(dto.totalAmount());
         order.setClient(dto.client());
         order.setStatus(dto.status());
 
